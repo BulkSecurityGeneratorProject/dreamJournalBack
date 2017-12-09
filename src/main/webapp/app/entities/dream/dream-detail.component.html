@@ -1,0 +1,63 @@
+
+<div *ngIf="dream">
+    <h2><span jhiTranslate="dreamJournalApp.dream.detail.title">Dream</span> {{dream.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="dreamJournalApp.dream.title">Title</span></dt>
+        <dd>
+            <span>{{dream.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.dream.createDate">Create Date</span></dt>
+        <dd>
+            <span>{{dream.createDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.dream.description">Description</span></dt>
+        <dd>
+            <span>{{dream.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.dream.isLucid">Is Lucid</span></dt>
+        <dd>
+            <span>{{dream.isLucid}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.dream.nightIndex">Night Index</span></dt>
+        <dd>
+            <span>{{dream.nightIndex}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.dream.visibility">Visibility</span></dt>
+        <dd>
+            <span>{{dream.visibility}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.dream.lenght">Lenght</span></dt>
+        <dd>
+            <span>{{dream.lenght}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.dream.score">Score</span></dt>
+        <dd>
+            <span>{{dream.score}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.dream.user">User</span></dt>
+        <dd>
+            {{dream.user?.id}}
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.dream.tags">Tags</span></dt>
+        <dd>
+            <span *ngFor="let tags of dream.tags; let last = last">
+                <a [routerLink]="['/tag', tags?.id ]">{{tags.id}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'dream/'+ dream.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

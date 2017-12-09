@@ -1,0 +1,49 @@
+
+<div *ngIf="comment">
+    <h2><span jhiTranslate="dreamJournalApp.comment.detail.title">Comment</span> {{comment.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="dreamJournalApp.comment.content">Content</span></dt>
+        <dd>
+            <span>{{comment.content}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.comment.createDate">Create Date</span></dt>
+        <dd>
+            <span>{{comment.createDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.comment.isReply">Is Reply</span></dt>
+        <dd>
+            <span>{{comment.isReply}}</span>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.comment.user">User</span></dt>
+        <dd>
+            {{comment.user?.id}}
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.comment.dream">Dream</span></dt>
+        <dd>
+            <div *ngIf="comment.dream">
+                <a [routerLink]="['/dream', comment.dream?.id]">{{comment.dream?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="dreamJournalApp.comment.childs">Childs</span></dt>
+        <dd>
+            <div *ngIf="comment.childs">
+                <a [routerLink]="['/comment', comment.childs?.id]">{{comment.childs?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'comment/'+ comment.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

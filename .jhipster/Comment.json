@@ -1,0 +1,49 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "dream",
+            "otherEntityName": "dream",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "childs",
+            "otherEntityName": "comment",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "parent",
+            "otherEntityName": "comment",
+            "otherEntityRelationshipName": "childs"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "content",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "isReply",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20171105165110",
+    "entityTableName": "comment",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no",
+    "searchEngine": "elasticsearch"
+}

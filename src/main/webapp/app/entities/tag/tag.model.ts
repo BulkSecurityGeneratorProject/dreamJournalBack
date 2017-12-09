@@ -1,0 +1,12 @@
+import { BaseEntity } from './../../shared';
+
+export class Tag implements BaseEntity {
+    constructor(
+        public id?: number,
+        public name?: string,
+        public isAdult?: boolean,
+        public dreams?: BaseEntity[],
+    ) {
+        this.isAdult = false;
+    }
+}

@@ -1,0 +1,63 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myCommentLabel" jhiTranslate="dreamJournalApp.comment.home.createOrEditLabel">Create or edit a Comment</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!comment.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="comment.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dreamJournalApp.comment.content" for="field_content">Content</label>
+            <input type="text" class="form-control" name="content" id="field_content"
+                [(ngModel)]="comment.content"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dreamJournalApp.comment.createDate" for="field_createDate">Create Date</label>
+            <div class="d-flex">
+                <input id="field_createDate" type="datetime-local" class="form-control" name="createDate" [(ngModel)]="comment.createDate"
+                  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dreamJournalApp.comment.isReply" for="field_isReply">Is Reply</label>
+            <input type="checkbox" class="form-control" name="isReply" id="field_isReply"
+                [(ngModel)]="comment.isReply"  />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dreamJournalApp.comment.user" for="field_user">User</label>
+            <select class="form-control" id="field_user" name="user" [(ngModel)]="comment.user" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id === comment.user?.id ? comment.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dreamJournalApp.comment.dream" for="field_dream">Dream</label>
+            <select class="form-control" id="field_dream" name="dream" [(ngModel)]="comment.dream" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="dreamOption.id === comment.dream?.id ? comment.dream : dreamOption" *ngFor="let dreamOption of dreams; trackBy: trackDreamById">{{dreamOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dreamJournalApp.comment.childs" for="field_childs">Childs</label>
+            <select class="form-control" id="field_childs" name="childs" [(ngModel)]="comment.childs" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="commentOption.id === comment.childs?.id ? comment.childs : commentOption" *ngFor="let commentOption of comments; trackBy: trackCommentById">{{commentOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

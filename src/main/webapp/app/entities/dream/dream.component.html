@@ -1,0 +1,95 @@
+<div>
+    <h2>
+        <span jhiTranslate="dreamJournalApp.dream.home.title">Dreams</span>
+        <button class="btn btn-primary float-right jh-create-entity create-dream" [routerLink]="['/', { outlets: { popup: ['dream-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="dreamJournalApp.dream.home.createLabel">
+            Create new Dream
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'dreamJournalApp.dream.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="dreams">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="title"><span jhiTranslate="dreamJournalApp.dream.title">Title</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="createDate"><span jhiTranslate="dreamJournalApp.dream.createDate">Create Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="description"><span jhiTranslate="dreamJournalApp.dream.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="isLucid"><span jhiTranslate="dreamJournalApp.dream.isLucid">Is Lucid</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="nightIndex"><span jhiTranslate="dreamJournalApp.dream.nightIndex">Night Index</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="visibility"><span jhiTranslate="dreamJournalApp.dream.visibility">Visibility</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lenght"><span jhiTranslate="dreamJournalApp.dream.lenght">Lenght</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="score"><span jhiTranslate="dreamJournalApp.dream.score">Score</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="user.id"><span jhiTranslate="dreamJournalApp.dream.user">User</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let dream of dreams ;trackBy: trackId">
+                <td><a [routerLink]="['../dream', dream.id ]">{{dream.id}}</a></td>
+                <td>{{dream.title}}</td>
+                <td>{{dream.createDate | date:'medium'}}</td>
+                <td>{{dream.description}}</td>
+                <td>{{dream.isLucid}}</td>
+                <td>{{dream.nightIndex}}</td>
+                <td>{{dream.visibility}}</td>
+                <td>{{dream.lenght}}</td>
+                <td>{{dream.score}}</td>
+                <td>
+                    {{dream.user?.id}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../dream', dream.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'dream/'+ dream.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'dream/'+ dream.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="dreams && dreams.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

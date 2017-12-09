@@ -1,0 +1,24 @@
+{
+    "dreamJournalApp": {
+        "userDetails" : {
+            "home": {
+                "title": "User Details",
+                "createLabel": "Dodaj User Details",
+                "createOrEditLabel": "Dodaj lub edytuj: User Details",
+                "search": "Szukaj User Details"
+            },
+            "created": "Utworzono nowy User Details z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono User Details z identyfikatorem {{ param }}",
+            "deleted": "Usunięto User Details z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć User Details {{ id }}?"
+            },
+            "detail": {
+                "title": "User Details"
+            },
+            "gender": "Gender",
+            "birthDate": "Birth Date",
+            "user": "User"
+        }
+    }
+}

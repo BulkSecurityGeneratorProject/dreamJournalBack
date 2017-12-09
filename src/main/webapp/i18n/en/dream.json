@@ -1,0 +1,32 @@
+{
+    "dreamJournalApp": {
+        "dream" : {
+            "home": {
+                "title": "Dreams",
+                "createLabel": "Create a new Dream",
+                "createOrEditLabel": "Create or edit a Dream",
+                "search": "Search for Dream"
+            },
+            "created": "A new Dream is created with identifier {{ param }}",
+            "updated": "A Dream is updated with identifier {{ param }}",
+            "deleted": "A Dream is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Dream {{ id }}?"
+            },
+            "detail": {
+                "title": "Dream"
+            },
+            "title": "Title",
+            "createDate": "Create Date",
+            "description": "Description",
+            "isLucid": "Is Lucid",
+            "nightIndex": "Night Index",
+            "visibility": "Visibility",
+            "lenght": "Lenght",
+            "score": "Score",
+            "user": "User",
+            "tags": "Tags",
+            "comments": "Comments"
+        }
+    }
+}
