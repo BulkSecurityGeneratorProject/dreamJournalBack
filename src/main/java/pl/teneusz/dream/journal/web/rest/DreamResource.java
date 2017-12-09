@@ -1,8 +1,14 @@
 package pl.teneusz.dream.journal.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import io.github.jhipster.web.util.ResponseUtil;
+import pl.teneusz.dream.journal.domain.Dream;
+
+import pl.teneusz.dream.journal.repository.DreamRepository;
+import pl.teneusz.dream.journal.repository.search.DreamSearchRepository;
+import pl.teneusz.dream.journal.web.rest.util.HeaderUtil;
+import pl.teneusz.dream.journal.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -11,22 +17,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.teneusz.dream.journal.domain.Dream;
-import pl.teneusz.dream.journal.repository.DreamRepository;
-import pl.teneusz.dream.journal.repository.UserRepository;
-import pl.teneusz.dream.journal.repository.search.DreamSearchRepository;
-import pl.teneusz.dream.journal.security.SecurityUtils;
-import pl.teneusz.dream.journal.service.dto.DiagramDto;
-import pl.teneusz.dream.journal.web.rest.util.HeaderUtil;
-import pl.teneusz.dream.journal.web.rest.util.PaginationUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Dream.
@@ -42,12 +43,9 @@ public class DreamResource {
     private final DreamRepository dreamRepository;
 
     private final DreamSearchRepository dreamSearchRepository;
-    private final UserRepository userRepository;
-
-    public DreamResource(DreamRepository dreamRepository, DreamSearchRepository dreamSearchRepository, UserRepository userRepository) {
+    public DreamResource(DreamRepository dreamRepository, DreamSearchRepository dreamSearchRepository) {
         this.dreamRepository = dreamRepository;
         this.dreamSearchRepository = dreamSearchRepository;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -64,9 +62,7 @@ public class DreamResource {
         if (dream.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dream cannot already have an ID")).body(null);
         }
-        dream.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get());
         Dream result = dreamRepository.save(dream);
-
         dreamSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/dreams/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -106,7 +102,7 @@ public class DreamResource {
     @Timed
     public ResponseEntity<List<Dream>> getAllDreams(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Dreams");
-        Page<Dream> page = dreamRepository.getAllDreams(pageable);
+        Page<Dream> page = dreamRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreams");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -123,23 +119,6 @@ public class DreamResource {
         log.debug("REST request to get Dream : {}", id);
         Dream dream = dreamRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(dream));
-    }
-
-    @GetMapping("/myDreams")
-    @Timed
-    public ResponseEntity<List<Dream>> getMyDreams(@ApiParam Pageable pageable) {
-        log.debug("REST request to get logged user dreams");
-        Page<Dream> page = dreamRepository.findByUserIsCurrentUser(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/myDreams");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
-    @GetMapping("/diagram/birthDateBetweenYear")
-    @Timed
-    public ResponseEntity<List<DiagramDto>> getDiagramData(@RequestParam(value = "down", defaultValue = "1900") Integer down, @RequestParam(value = "up", defaultValue = "2017") Integer up) {
-        log.debug("REST get diagram data down = " + down + "; up = " + up);
-        List<DiagramDto> diagramDtos = dreamRepository.getDiagramScoreByBirthDate(down, up);
-        return new ResponseEntity<>(diagramDtos, HttpStatus.OK);
     }
 
     /**
@@ -161,7 +140,7 @@ public class DreamResource {
      * SEARCH  /_search/dreams?query=:query : search for the dream corresponding
      * to the query.
      *
-     * @param query    the query of the dream search
+     * @param query the query of the dream search
      * @param pageable the pagination information
      * @return the result of the search
      */
