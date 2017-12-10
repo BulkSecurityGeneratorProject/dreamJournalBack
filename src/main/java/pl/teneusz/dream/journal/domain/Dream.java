@@ -69,7 +69,7 @@ public class Dream implements Serializable {
     private Set<Tag> tags = new HashSet<>();
 
     @OneToMany(mappedBy = "dream")
-    @JsonIgnore
+    //@JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> comments = new HashSet<>();
 
@@ -233,13 +233,13 @@ public class Dream implements Serializable {
         return this;
     }
 
-    public Dream addComment(Comment comment) {
+    public Dream addComments(Comment comment) {
         this.comments.add(comment);
         comment.setDream(this);
         return this;
     }
 
-    public Dream removeComment(Comment comment) {
+    public Dream removeComments(Comment comment) {
         this.comments.remove(comment);
         comment.setDream(null);
         return this;

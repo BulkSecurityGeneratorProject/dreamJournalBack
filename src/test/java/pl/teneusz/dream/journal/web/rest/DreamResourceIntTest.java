@@ -4,6 +4,7 @@ import pl.teneusz.dream.journal.DreamJournalApp;
 
 import pl.teneusz.dream.journal.domain.Dream;
 import pl.teneusz.dream.journal.repository.DreamRepository;
+import pl.teneusz.dream.journal.repository.UserRepository;
 import pl.teneusz.dream.journal.repository.search.DreamSearchRepository;
 import pl.teneusz.dream.journal.web.rest.errors.ExceptionTranslator;
 
@@ -83,6 +84,9 @@ public class DreamResourceIntTest {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private EntityManager em;
 
     private MockMvc restDreamMockMvc;
@@ -92,7 +96,7 @@ public class DreamResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DreamResource dreamResource = new DreamResource(dreamRepository, dreamSearchRepository);
+        final DreamResource dreamResource = new DreamResource(dreamRepository, dreamSearchRepository, userRepository);
         this.restDreamMockMvc = MockMvcBuilders.standaloneSetup(dreamResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

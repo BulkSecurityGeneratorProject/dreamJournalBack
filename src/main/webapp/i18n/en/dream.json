@@ -26,7 +26,7 @@
             "score": "Score",
             "user": "User",
             "tags": "Tags",
-            "comment": "Comment"
+            "comments": "Comments"
         }
     }
 }

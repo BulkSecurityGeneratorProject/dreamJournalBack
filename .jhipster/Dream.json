@@ -16,9 +16,9 @@
             "ownerSide": true
         },
         {
-            "relationshipName": "comment",
-            "otherEntityName": "comment",
             "relationshipType": "one-to-many",
+            "relationshipName": "comments",
+            "otherEntityName": "comment",
             "otherEntityRelationshipName": "dream"
         }
     ],
@@ -73,9 +73,9 @@
         }
     ],
     "changelogDate": "20171105165111",
-    "dto": "no",
-    "service": "no",
     "entityTableName": "dream",
-    "jpaMetamodelFiltering": false,
-    "pagination": "pagination"
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no",
+    "searchEngine": "elasticsearch"
 }
