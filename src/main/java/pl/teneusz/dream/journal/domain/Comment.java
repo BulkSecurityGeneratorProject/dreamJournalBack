@@ -44,12 +44,11 @@ public class Comment implements Serializable {
     private Dream dream;
 
     @ManyToOne
-    private Comment childs;
+    private Comment parent;
 
-    @OneToMany(mappedBy = "childs")
-    @JsonIgnore
+    @OneToMany(mappedBy = "parent")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Comment> parents = new HashSet<>();
+    private Set<Comment> childs = new HashSet<>();
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
@@ -125,42 +124,42 @@ public class Comment implements Serializable {
         this.dream = dream;
     }
 
-    public Comment getChilds() {
+    public Comment getParent() {
+        return parent;
+    }
+
+    public Comment parent(Comment comment) {
+        this.parent = comment;
+        return this;
+    }
+
+    public void setParent(Comment comment) {
+        this.parent = comment;
+    }
+
+    public Set<Comment> getChilds() {
         return childs;
     }
 
-    public Comment childs(Comment comment) {
-        this.childs = comment;
+    public Comment childs(Set<Comment> comments) {
+        this.childs = comments;
         return this;
     }
 
-    public void setChilds(Comment comment) {
-        this.childs = comment;
-    }
-
-    public Set<Comment> getParents() {
-        return parents;
-    }
-
-    public Comment parents(Set<Comment> comments) {
-        this.parents = comments;
+    public Comment addChilds(Comment comment) {
+        this.childs.add(comment);
+        comment.setParent(this);
         return this;
     }
 
-    public Comment addParent(Comment comment) {
-        this.parents.add(comment);
-        comment.setChilds(this);
+    public Comment removeChilds(Comment comment) {
+        this.childs.remove(comment);
+        comment.setParent(null);
         return this;
     }
 
-    public Comment removeParent(Comment comment) {
-        this.parents.remove(comment);
-        comment.setChilds(null);
-        return this;
-    }
-
-    public void setParents(Set<Comment> comments) {
-        this.parents = comments;
+    public void setChilds(Set<Comment> comments) {
+        this.childs = comments;
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 

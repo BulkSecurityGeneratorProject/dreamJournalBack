@@ -35,7 +35,7 @@
             <th jhiSortBy="isReply"><span jhiTranslate="dreamJournalApp.comment.isReply">Is Reply</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="user.id"><span jhiTranslate="dreamJournalApp.comment.user">User</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="dream.id"><span jhiTranslate="dreamJournalApp.comment.dream">Dream</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="childs.id"><span jhiTranslate="dreamJournalApp.comment.childs">Childs</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="parent.id"><span jhiTranslate="dreamJournalApp.comment.parent">Parent</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -54,8 +54,8 @@
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="comment.childs">
-                        <a [routerLink]="['../comment', comment.childs?.id ]" >{{comment.childs?.id}}</a>
+                    <div *ngIf="comment.parent">
+                        <a [routerLink]="['../comment', comment.parent?.id ]" >{{comment.parent?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

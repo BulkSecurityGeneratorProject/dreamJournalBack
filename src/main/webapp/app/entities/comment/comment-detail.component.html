@@ -26,10 +26,10 @@
                 <a [routerLink]="['/dream', comment.dream?.id]">{{comment.dream?.id}}</a>
             </div>
         </dd>
-        <dt><span jhiTranslate="dreamJournalApp.comment.childs">Childs</span></dt>
+        <dt><span jhiTranslate="dreamJournalApp.comment.parent">Parent</span></dt>
         <dd>
-            <div *ngIf="comment.childs">
-                <a [routerLink]="['/comment', comment.childs?.id]">{{comment.childs?.id}}</a>
+            <div *ngIf="comment.parent">
+                <a [routerLink]="['/comment', comment.parent?.id]">{{comment.parent?.id}}</a>
             </div>
         </dd>
     </dl>

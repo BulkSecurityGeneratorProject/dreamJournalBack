@@ -49,6 +49,7 @@ public class CacheConfiguration {
             cm.createCache(UserDetails.class.getName(), jcacheConfiguration);
             cm.createCache(pl.teneusz.dream.journal.domain.Tag.class.getName(), jcacheConfiguration);
             cm.createCache(pl.teneusz.dream.journal.domain.Tag.class.getName() + ".dreams", jcacheConfiguration);
+            cm.createCache(pl.teneusz.dream.journal.domain.Comment.class.getName() + ".childs", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

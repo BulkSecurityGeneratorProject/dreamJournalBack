@@ -120,13 +120,6 @@ public class CommentResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(comment));
     }
 
-    @GetMapping("/commentsByDream/{id}")
-    @Timed
-    public ResponseEntity<List<Comment>> getCommentsByDream(@PathVariable Long id){
-        List<Comment> comments = commentRepository.findByDreamId(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(comments));
-    }
-
     /**
      * DELETE  /comments/:id : delete the "id" comment.
      *

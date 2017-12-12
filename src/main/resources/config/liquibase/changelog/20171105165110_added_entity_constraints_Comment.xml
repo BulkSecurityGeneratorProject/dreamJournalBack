@@ -20,9 +20,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="dream"/>
 
-        <addForeignKeyConstraint baseColumnNames="childs_id"
+        <addForeignKeyConstraint baseColumnNames="parent_id"
                                  baseTableName="comment"
-                                 constraintName="fk_comment_childs_id"
+                                 constraintName="fk_comment_parent_id"
                                  referencedColumnNames="id"
                                  referencedTableName="comment"/>
 

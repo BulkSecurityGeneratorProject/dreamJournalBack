@@ -8,8 +8,8 @@ export class Comment implements BaseEntity {
         public isReply?: boolean,
         public user?: User,
         public dream?: BaseEntity,
-        public childs?: BaseEntity,
-        public parents?: BaseEntity[],
+        public parent?: BaseEntity,
+        public childs?: BaseEntity[],
     ) {
         this.isReply = false;
     }

@@ -14,16 +14,16 @@
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "childs",
+            "relationshipName": "parent",
             "otherEntityName": "comment",
+            "relationshipType": "many-to-one",
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "parent",
+            "relationshipName": "childs",
             "otherEntityName": "comment",
-            "otherEntityRelationshipName": "childs"
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "parent"
         }
     ],
     "fields": [
@@ -41,9 +41,9 @@
         }
     ],
     "changelogDate": "20171105165110",
-    "entityTableName": "comment",
     "dto": "no",
-    "pagination": "pagination",
     "service": "no",
-    "searchEngine": "elasticsearch"
+    "entityTableName": "comment",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
 }

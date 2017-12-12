@@ -21,8 +21,8 @@
             "isReply": "Is Reply",
             "user": "User",
             "dream": "Dream",
-            "childs": "Childs",
-            "parent": "Parent"
+            "parent": "Parent",
+            "childs": "Childs"
         }
     }
 }
