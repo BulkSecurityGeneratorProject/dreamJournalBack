@@ -46,7 +46,7 @@ public class Comment implements Serializable {
     @ManyToOne
     private Comment parent;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
 //    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> childs = new HashSet<>();
 
