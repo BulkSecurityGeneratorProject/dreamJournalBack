@@ -47,7 +47,7 @@ public class Comment implements Serializable {
     private Comment parent;
 
     @OneToMany(mappedBy = "parent")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> childs = new HashSet<>();
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
