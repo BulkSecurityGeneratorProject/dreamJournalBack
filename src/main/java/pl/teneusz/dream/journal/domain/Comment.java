@@ -41,9 +41,11 @@ public class Comment implements Serializable {
     private User user;
 
     @ManyToOne
+    @JsonIgnore
     private Dream dream;
 
     @ManyToOne
+    @JsonIgnore
     private Comment parent;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
