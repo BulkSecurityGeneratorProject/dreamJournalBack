@@ -21,7 +21,7 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     @Query("select dream from Dream dream where dream.user.login = ?#{principal.username} order by dream.id desc")
     Page<Dream> findByUserIsCurrentUser(Pageable pageable);
 
-    @Query("select dream from Dream dream left join fetch dream.tags  left join fetch dream.comments where dream.visibility = true and dream.user is not null order by dream.id desc")
+    @Query("select dream from Dream dream where dream.visibility = true and dream.user is not null order by dream.id desc")
     Page<Dream> getAllDreams(Pageable pageable);
 
     @Query("select dream from Dream dream left join fetch dream.tags where dream.id =:id")
