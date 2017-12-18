@@ -71,6 +71,9 @@ public class Dream implements Serializable {
     @OneToMany(mappedBy = "dream")
    // @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name="dream_comments",
+                joinColumns = @JoinColumn(name="dreams_id",referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "comments_id",referencedColumnName = "id"))
     private Set<Comment> comments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
