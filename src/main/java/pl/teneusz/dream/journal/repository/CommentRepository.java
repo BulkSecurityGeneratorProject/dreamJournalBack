@@ -19,7 +19,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query("select comment from Comment comment where comment.user.login = ?#{principal.username}")
     List<Comment> findByUserIsCurrentUser();
 
-    @Query("select  comment from Comment comment where comment.dream.id = :id and comment.isReply = false")
+    @Query("select  comment from Comment comment where comment.dream.id = :id and comment.isReply = false order by id desc")
     List<Comment> findByDreamId(@Param("id")Long id);
 
     @Query("select comment from Comment comment")
