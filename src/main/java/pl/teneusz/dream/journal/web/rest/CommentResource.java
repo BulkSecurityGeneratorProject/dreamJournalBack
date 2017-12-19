@@ -4,7 +4,9 @@ import com.codahale.metrics.annotation.Timed;
 import pl.teneusz.dream.journal.domain.Comment;
 
 import pl.teneusz.dream.journal.repository.CommentRepository;
+import pl.teneusz.dream.journal.repository.UserRepository;
 import pl.teneusz.dream.journal.repository.search.CommentSearchRepository;
+import pl.teneusz.dream.journal.security.SecurityUtils;
 import pl.teneusz.dream.journal.web.rest.util.HeaderUtil;
 import pl.teneusz.dream.journal.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
@@ -42,9 +44,12 @@ public class CommentResource {
     private final CommentRepository commentRepository;
 
     private final CommentSearchRepository commentSearchRepository;
-    public CommentResource(CommentRepository commentRepository, CommentSearchRepository commentSearchRepository) {
+    private final UserRepository userRepository;
+
+    public CommentResource(CommentRepository commentRepository, CommentSearchRepository commentSearchRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.commentSearchRepository = commentSearchRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -61,6 +66,7 @@ public class CommentResource {
         if (comment.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new comment cannot already have an ID")).body(null);
         }
+        comment.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get());
         Comment result = commentRepository.save(comment);
         commentSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/comments/" + result.getId()))
