@@ -41,7 +41,6 @@ public class Comment implements Serializable {
     private User user;
 
     @ManyToOne
-    @JsonIgnore
     private Dream dream;
 
     @ManyToOne
