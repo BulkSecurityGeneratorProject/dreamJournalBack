@@ -70,7 +70,7 @@ public class Dream implements Serializable {
                inverseJoinColumns = @JoinColumn(name="tags_id", referencedColumnName="id"))
     private Set<Tag> tags = new HashSet<>();
 
-    @OneToMany(mappedBy = "dream")
+    @OneToMany(mappedBy = "dream", fetch = FetchType.LAZY)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @LazyCollection(LazyCollectionOption.EXTRA)
