@@ -107,6 +107,9 @@ public class DreamResource {
     public ResponseEntity<List<Dream>> getAllDreams(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Dreams");
         Page<Dream> page = dreamRepository.getAllDreams(pageable);
+        page.getContent().forEach(dream -> {
+            dream.setCommentCount(dream.getComments().size());
+        });
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreams");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
