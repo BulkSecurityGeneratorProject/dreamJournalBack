@@ -3,6 +3,8 @@ package pl.teneusz.dream.journal.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -71,7 +73,11 @@ public class Dream implements Serializable {
     @OneToMany(mappedBy = "dream")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<Comment> comments = new HashSet<>();
+
+    @Transient
+    private Integer commentCount = comments.size();
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
