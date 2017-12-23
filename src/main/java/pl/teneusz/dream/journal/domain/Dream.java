@@ -79,6 +79,11 @@ public class Dream implements Serializable {
     @Transient
     private Integer commentCount = comments.size();
 
+    @PostLoad
+    void onLoad(){
+        commentCount = comments.size();
+    }
+
     public Integer getCommentCount() {
         return commentCount;
     }
