@@ -7,6 +7,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -114,15 +115,16 @@ public class DreamResource {
         List<Long> ids = Lists.newArrayList();
         page.getContent().stream().forEach(dream -> ids.add(dream.getId()));
         List<DreamHelper> helpers = dreamRepository.getAdditionalInfo(ids);
-        Map<Long, DreamHelper> map = Maps.newHashMap();
-        helpers.stream().forEach(dreamHelper -> map.put(dreamHelper.getDreamId(),dreamHelper));
-        page.getContent().stream().forEach(dream -> {
-            Long id = dream.getId();
-            if(map.get(id) != null) {
-                dream.setCommentCount(map.get(id).getCommentCount().intValue());
-            }
-        });
-
+        if(!org.springframework.util.CollectionUtils.isEmpty(helpers)) {
+            Map<Long, DreamHelper> map = Maps.newHashMap();
+            helpers.stream().forEach(dreamHelper -> map.put(dreamHelper.getDreamId(), dreamHelper));
+            page.getContent().stream().forEach(dream -> {
+                Long id = dream.getId();
+                if (map.get(id) != null) {
+                    dream.setCommentCount(map.get(id).getCommentCount().intValue());
+                }
+            });
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreams");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
