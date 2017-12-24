@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.teneusz.dream.journal.domain.Dream;
+import pl.teneusz.dream.journal.domain.DreamHelper;
 import pl.teneusz.dream.journal.service.dto.DiagramDto;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Spring Data JPA repository for the Dream entity.
@@ -29,5 +31,8 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
 
     @Query("select new pl.teneusz.dream.journal.service.dto.DiagramDto(dream.score, count(dream.score)) from Dream dream inner join UserDetails details on details.user.id = dream.user.id where year(details.birthDate) between :down and :up group by dream.score order by dream.score")
     List<DiagramDto> getDiagramScoreByBirthDate(@Param("down") Integer down, @Param("up") Integer up);
+
+    @Query("select new map(dream.id, new pl.teneusz.dream.journal.domain.DreamHelper(dream.id, dream.comments.size)) from Dream dream where dream.id in (:ids)")
+    Map<Long, DreamHelper> getAdditionalInfo(@Param("ids")List<Long> ids);
 
 }

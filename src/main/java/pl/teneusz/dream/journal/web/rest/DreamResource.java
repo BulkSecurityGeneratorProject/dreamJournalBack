@@ -1,6 +1,7 @@
 package pl.teneusz.dream.journal.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.google.common.collect.Lists;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.teneusz.dream.journal.domain.Dream;
+import pl.teneusz.dream.journal.domain.DreamHelper;
 import pl.teneusz.dream.journal.repository.DreamRepository;
 import pl.teneusz.dream.journal.repository.UserRepository;
 import pl.teneusz.dream.journal.repository.search.DreamSearchRepository;
@@ -24,6 +26,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
@@ -107,6 +110,14 @@ public class DreamResource {
     public ResponseEntity<List<Dream>> getAllDreams(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Dreams");
         Page<Dream> page = dreamRepository.getAllDreams(pageable);
+        List<Long> ids = Lists.newArrayList();
+        page.getContent().stream().forEach(dream -> ids.add(dream.getId()));
+        Map<Long, DreamHelper> helpers = dreamRepository.getAdditionalInfo(ids);
+        page.getContent().stream().forEach(dream -> {
+            Long id = dream.getId();
+            dream.setCommentCount(helpers.get(id).getCommentCount());
+        });
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreams");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
