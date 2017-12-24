@@ -32,7 +32,7 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     @Query("select new pl.teneusz.dream.journal.service.dto.DiagramDto(dream.score, count(dream.score)) from Dream dream inner join UserDetails details on details.user.id = dream.user.id where year(details.birthDate) between :down and :up group by dream.score order by dream.score")
     List<DiagramDto> getDiagramScoreByBirthDate(@Param("down") Integer down, @Param("up") Integer up);
 
-    @Query("select new pl.teneusz.dream.journal.domain.DreamHelper(dream.id,count(elements( dream.comments))) from Dream dream where dream.id in (:ids)")
+    @Query("select new pl.teneusz.dream.journal.domain.DreamHelper(dream.id,count(elements( dream.comments))) from Dream dream where dream.id in elements(:ids)")
     List<DreamHelper> getAdditionalInfo(@Param("ids")List<Long> ids);
 
 }
