@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -77,7 +78,8 @@ public class Dream implements Serializable {
     private Set<Comment> comments = new HashSet<>();
 
     @Transient
-    private Integer commentCount = comments.size();
+    @JsonInclude
+    private Integer commentCount = 0;
 
     @PostLoad
     void onLoad(){
