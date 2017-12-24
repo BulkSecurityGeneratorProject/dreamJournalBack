@@ -2,9 +2,9 @@ package pl.teneusz.dream.journal.domain;
 
 public class DreamHelper {
     private Long dreamId;
-    private Integer commentCount;
+    private Long commentCount;
 
-    public DreamHelper(Long dreamId, Integer commentCount) {
+    public DreamHelper(Long dreamId, Long commentCount) {
         this.dreamId = dreamId;
         this.commentCount = commentCount;
     }
@@ -17,11 +17,11 @@ public class DreamHelper {
         this.dreamId = dreamId;
     }
 
-    public Integer getCommentCount() {
+    public Long getCommentCount() {
         return commentCount;
     }
 
-    public void setCommentCount(Integer commentCount) {
+    public void setCommentCount(Long commentCount) {
         this.commentCount = commentCount;
     }
 }

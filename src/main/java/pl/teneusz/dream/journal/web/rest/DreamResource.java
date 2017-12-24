@@ -118,7 +118,7 @@ public class DreamResource {
         helpers.stream().forEach(dreamHelper -> map.put(dreamHelper.getDreamId(),dreamHelper));
         page.getContent().stream().forEach(dream -> {
             Long id = dream.getId();
-            dream.setCommentCount(map.get(id).getCommentCount());
+            dream.setCommentCount(map.get(id).getCommentCount().intValue());
         });
 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreams");
