@@ -2,6 +2,7 @@ package pl.teneusz.dream.journal.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -112,10 +113,12 @@ public class DreamResource {
         Page<Dream> page = dreamRepository.getAllDreams(pageable);
         List<Long> ids = Lists.newArrayList();
         page.getContent().stream().forEach(dream -> ids.add(dream.getId()));
-        Map<Long, DreamHelper> helpers = dreamRepository.getAdditionalInfo(ids);
+        List<DreamHelper> helpers = dreamRepository.getAdditionalInfo(ids);
+        Map<Long, DreamHelper> map = Maps.newHashMap();
+        helpers.stream().forEach(dreamHelper -> map.put(dreamHelper.getDreamId(),dreamHelper));
         page.getContent().stream().forEach(dream -> {
             Long id = dream.getId();
-            dream.setCommentCount(helpers.get(id).getCommentCount());
+            dream.setCommentCount(map.get(id).getCommentCount());
         });
 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreams");
