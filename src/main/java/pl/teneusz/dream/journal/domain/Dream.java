@@ -81,11 +81,6 @@ public class Dream implements Serializable {
     @JsonInclude
     private Integer commentCount = 0;
 
-    @PostLoad
-    void onLoad(){
-        commentCount = comments.size();
-    }
-
     public Integer getCommentCount() {
         return commentCount;
     }
