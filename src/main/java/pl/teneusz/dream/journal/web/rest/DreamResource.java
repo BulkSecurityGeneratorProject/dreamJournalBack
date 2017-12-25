@@ -146,7 +146,7 @@ public class DreamResource {
 
     @GetMapping("/dreamsByTag/{tag}")
     @Timed
-    public ResponseEntity<List<Dream>> getDreamsByTag(@ApiParam Pageable pageable, @PathVariable Tag tag) {
+    public ResponseEntity<List<Dream>> getDreamsByTag(@ApiParam Pageable pageable, @PathVariable String tag) {
         log.debug("REST request to get Dreams by tsg : {}", tag);
         Page<Dream> page = dreamRepository.getDreamsByTag(pageable,tag);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreamsByTag");

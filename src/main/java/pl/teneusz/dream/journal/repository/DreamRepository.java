@@ -26,8 +26,8 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
 
     @Query("select dream from Dream dream where dream.visibility = true and dream.user is not null order by dream.id desc")
     Page<Dream> getAllDreams(Pageable pageable);
-    @Query("select dream from Dream dream where dream.visibility = true and :tag in dream.tags and dream.user is not null order by dream.id desc")
-    Page<Dream> getDreamsByTag(Pageable pageable,@Param("tag") Tag tag);
+    @Query("select dream from Dream dream join dream.tags t where dream.visibility = true and t.name = :tag and dream.user is not null order by dream.id desc")
+    Page<Dream> getDreamsByTag(Pageable pageable,@Param("tag") String tag);
 
     @Query("select dream from Dream dream left join fetch dream.tags where dream.id =:id")
     Dream findOneWithEagerRelationships(@Param("id") Long id);
