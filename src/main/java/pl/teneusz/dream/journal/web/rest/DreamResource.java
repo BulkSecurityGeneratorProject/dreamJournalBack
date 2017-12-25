@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.teneusz.dream.journal.domain.Dream;
 import pl.teneusz.dream.journal.domain.DreamHelper;
+import pl.teneusz.dream.journal.domain.Tag;
 import pl.teneusz.dream.journal.repository.DreamRepository;
 import pl.teneusz.dream.journal.repository.UserRepository;
 import pl.teneusz.dream.journal.repository.search.DreamSearchRepository;
@@ -141,6 +142,15 @@ public class DreamResource {
         log.debug("REST request to get Dream : {}", id);
         Dream dream = dreamRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(dream));
+    }
+
+    @GetMapping("/dreamsByTag/{tag}")
+    @Timed
+    public ResponseEntity<List<Dream>> getDreamsByTag(@ApiParam Pageable pageable, @PathVariable Tag tag) {
+        log.debug("REST request to get Dreams by tsg : {}", tag);
+        Page<Dream> page = dreamRepository.getDreamsByTag(pageable,tag);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreamsByTag");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     @GetMapping("/myDreams")

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.teneusz.dream.journal.domain.Dream;
 import pl.teneusz.dream.journal.domain.DreamHelper;
+import pl.teneusz.dream.journal.domain.Tag;
 import pl.teneusz.dream.journal.service.dto.DiagramDto;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
 
     @Query("select dream from Dream dream where dream.visibility = true and dream.user is not null order by dream.id desc")
     Page<Dream> getAllDreams(Pageable pageable);
+    @Query("select dream from Dream dream where dream.visibility = true and :tag in dream.tags and dream.user is not null order by dream.id desc")
+    Page<Dream> getDreamsByTag(Pageable pageable,@Param("tag") Tag tag);
 
     @Query("select dream from Dream dream left join fetch dream.tags where dream.id =:id")
     Dream findOneWithEagerRelationships(@Param("id") Long id);
@@ -34,5 +37,7 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
 
     @Query("select new pl.teneusz.dream.journal.domain.DreamHelper(dream.id,count(elements( dream.comments))) from Dream dream where dream.id in (:ids) group by dream.id")
     List<DreamHelper> getAdditionalInfo(@Param("ids")List<Long> ids);
+
+
 
 }
