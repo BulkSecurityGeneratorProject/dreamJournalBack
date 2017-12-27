@@ -76,6 +76,17 @@ public class Dream implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> comments = new HashSet<>();
 
+    @Transient
+    private Integer dreamCount;
+
+    public Integer getDreamCount() {
+        return dreamCount;
+    }
+
+    public void setDreamCount(Integer dreamCount) {
+        this.dreamCount = dreamCount;
+    }
+
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
