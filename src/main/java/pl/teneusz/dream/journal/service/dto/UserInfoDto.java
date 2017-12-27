@@ -2,7 +2,6 @@ package pl.teneusz.dream.journal.service.dto;
 
 import pl.teneusz.dream.journal.domain.UserDetails;
 
-
 public class UserInfoDto {
 
     private Long userId;
