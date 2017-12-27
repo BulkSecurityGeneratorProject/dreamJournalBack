@@ -77,14 +77,14 @@ public class Dream implements Serializable {
     private Set<Comment> comments = new HashSet<>();
 
     @Transient
-    private Integer dreamCount;
+    private Integer commentCount;
 
-    public Integer getDreamCount() {
-        return dreamCount;
+    public Integer getCommentCount() {
+        return commentCount;
     }
 
-    public void setDreamCount(Integer dreamCount) {
-        this.dreamCount = dreamCount;
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
