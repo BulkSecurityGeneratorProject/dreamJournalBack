@@ -1,12 +1,14 @@
 package pl.teneusz.dream.journal.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import pl.teneusz.dream.journal.domain.User;
 import pl.teneusz.dream.journal.service.dto.UserInfoDto;
 
 @Repository
-public interface UserInfoRepository {
+public interface UserInfoRepository extends JpaRepository<User, Long> {
 
     @Query("select new pl.teneusz.dream.journal.service.dto.UserInfoDto(user.id,details, count(dream), count(comment)) " +
         "from User user " +
