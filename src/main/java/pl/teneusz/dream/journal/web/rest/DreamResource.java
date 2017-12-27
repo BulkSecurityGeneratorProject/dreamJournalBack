@@ -202,4 +202,11 @@ public class DreamResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @GetMapping("/dreamsByUserId/{userId}")
+    public ResponseEntity<List<Dream>> getDreamsByUserId(@PathVariable Long id, @ApiParam Pageable pageable) {
+        log.debug("REST request to get logged user dreams");
+        Page<Dream> page = dreamRepository.findDreamsByUserId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreamsByUserId");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 }

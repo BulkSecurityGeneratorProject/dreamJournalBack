@@ -38,6 +38,8 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     @Query("select new pl.teneusz.dream.journal.domain.DreamHelper(dream.id,count(elements( dream.comments))) from Dream dream where dream.id in (:ids) group by dream.id")
     List<DreamHelper> getAdditionalInfo(@Param("ids")List<Long> ids);
 
+    @Query("select dream from Dream dream where dream.user.id = :id")
+    Page<Dream> findDreamsByUserId(@Param("id")Long id, Pageable pageable);
 
 
 }
