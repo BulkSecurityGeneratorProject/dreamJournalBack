@@ -10,12 +10,10 @@ import pl.teneusz.dream.journal.service.dto.UserInfoDto;
 @Repository
 public interface UserInfoRepository extends JpaRepository<User, Long> {
 
-    @Query("select new pl.teneusz.dream.journal.service.dto.UserInfoDto(user.id,details, count(elements(dream)), count(elements(comment.id))) " +
+    @Query("select new pl.teneusz.dream.journal.service.dto.UserInfoDto(user.id,details, (select count(dream) from Dream dream where dream.user = user), (select count(comment) from Comment comment where comment.user = user)) " +
         "from User user " +
         "left join UserDetails details on details.user = user " +
-        "left join Dream dream on dream.user = user " +
-        "left join Comment comment on comment.user = user " +
         "where user.id = :userId " +
         "group by user.id")
-    UserInfoDto getUserInfoByUserId(@Param("userId")Long id);
+    UserInfoDto getUserInfoByUserId(@Param("userId") Long id);
 }

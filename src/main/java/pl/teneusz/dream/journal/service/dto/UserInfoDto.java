@@ -6,10 +6,10 @@ public class UserInfoDto {
 
     private Long userId;
     private UserDetails details;
-    private Long dreamCount;
-    private Long commentCount;
+    private Integer dreamCount;
+    private Integer commentCount;
 
-    public UserInfoDto(Long userId, UserDetails details, Long dreamCount, Long commentCount) {
+    public UserInfoDto(Long userId, UserDetails details, Integer dreamCount, Integer commentCount) {
         this.userId = userId;
         this.details = details;
         this.dreamCount = dreamCount;
@@ -32,19 +32,19 @@ public class UserInfoDto {
         this.details = details;
     }
 
-    public Long getDreamCount() {
+    public Integer getDreamCount() {
         return dreamCount;
     }
 
-    public void setDreamCount(Long dreamCount) {
+    public void setDreamCount(Integer dreamCount) {
         this.dreamCount = dreamCount;
     }
 
-    public Long getCommentCount() {
+    public Integer getCommentCount() {
         return commentCount;
     }
 
-    public void setCommentCount(Long commentCount) {
+    public void setCommentCount(Integer commentCount) {
         this.commentCount = commentCount;
     }
 }
