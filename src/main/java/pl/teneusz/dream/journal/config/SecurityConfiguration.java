@@ -108,6 +108,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET,"/api/comments/**").permitAll()
             .antMatchers(HttpMethod.GET,"/api/commentsByDream/**").permitAll()
             .antMatchers(HttpMethod.GET,"/api/dreamsByTag/**").permitAll()
+            .antMatchers(HttpMethod.GET,"/api/dreamsByUserId/**").permitAll()
             .antMatchers(HttpMethod.GET,"/api/userInfo/**").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
