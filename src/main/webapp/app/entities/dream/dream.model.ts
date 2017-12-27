@@ -11,11 +11,13 @@ export class Dream implements BaseEntity {
         public visibility?: boolean,
         public lenght?: number,
         public score?: number,
+        public isAdult?: boolean,
         public user?: User,
         public tags?: BaseEntity[],
         public comments?: BaseEntity[],
     ) {
         this.isLucid = false;
         this.visibility = false;
+        this.isAdult = false;
     }
 }

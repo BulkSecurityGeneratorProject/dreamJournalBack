@@ -24,6 +24,7 @@
             "visibility": "Visibility",
             "lenght": "Lenght",
             "score": "Score",
+            "isAdult": "Is Adult",
             "user": "User",
             "tags": "Tags",
             "comments": "Comments"

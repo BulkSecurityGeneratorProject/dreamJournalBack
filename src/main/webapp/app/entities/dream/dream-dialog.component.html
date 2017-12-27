@@ -92,6 +92,11 @@
                 </small>
             </div>
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="dreamJournalApp.dream.isAdult" for="field_isAdult">Is Adult</label>
+            <input type="checkbox" class="form-control" name="isAdult" id="field_isAdult"
+                [(ngModel)]="dream.isAdult"  />
+        </div>
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="dreamJournalApp.dream.user" for="field_user">User</label>

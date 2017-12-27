@@ -70,12 +70,16 @@
             ],
             "fieldValidateRulesMin": 1,
             "fieldValidateRulesMax": 10
+        },
+        {
+            "fieldName": "isAdult",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20171105165111",
-    "entityTableName": "dream",
     "dto": "no",
-    "pagination": "pagination",
     "service": "no",
-    "searchEngine": "elasticsearch"
+    "entityTableName": "dream",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
 }

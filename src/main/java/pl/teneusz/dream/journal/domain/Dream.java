@@ -3,9 +3,6 @@ package pl.teneusz.dream.journal.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -61,6 +58,9 @@ public class Dream implements Serializable {
     @Column(name = "score")
     private Integer score;
 
+    @Column(name = "is_adult")
+    private Boolean isAdult;
+
     @ManyToOne
     private User user;
 
@@ -71,23 +71,10 @@ public class Dream implements Serializable {
                inverseJoinColumns = @JoinColumn(name="tags_id", referencedColumnName="id"))
     private Set<Tag> tags = new HashSet<>();
 
-    @OneToMany(mappedBy = "dream", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dream")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<Comment> comments = new HashSet<>();
-
-    @Transient
-    @JsonInclude
-    private Integer commentCount = 0;
-
-    public Integer getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(Integer commentCount) {
-        this.commentCount = commentCount;
-    }
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
@@ -202,6 +189,19 @@ public class Dream implements Serializable {
         this.score = score;
     }
 
+    public Boolean isIsAdult() {
+        return isAdult;
+    }
+
+    public Dream isAdult(Boolean isAdult) {
+        this.isAdult = isAdult;
+        return this;
+    }
+
+    public void setIsAdult(Boolean isAdult) {
+        this.isAdult = isAdult;
+    }
+
     public User getUser() {
         return user;
     }
@@ -298,6 +298,7 @@ public class Dream implements Serializable {
             ", visibility='" + isVisibility() + "'" +
             ", lenght='" + getLenght() + "'" +
             ", score='" + getScore() + "'" +
+            ", isAdult='" + isIsAdult() + "'" +
             "}";
     }
 }
