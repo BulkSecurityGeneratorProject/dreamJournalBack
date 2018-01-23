@@ -18,6 +18,6 @@ import java.util.List;
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
     @Query("Select new pl.teneusz.dream.journal.service.dto.DiagramDto(t.name, count(t.dreams)) from Tag t " +
-        "group by t.name")
+        "join fetch t.dreams d group by t.name")
     List<DiagramDto> findHowManyDreamsWithTagBetweenYear();
 }
