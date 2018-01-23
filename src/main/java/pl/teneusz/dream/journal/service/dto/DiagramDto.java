@@ -12,7 +12,18 @@ public class DiagramDto {
         this.x = x;
         this.y = yValue;
     }
+
     public DiagramDto(Number x, Number yValue) {
+        this.x = x.toString();
+        this.y = yValue.toString();
+    }
+
+    public DiagramDto(String x, Number yValue) {
+        this.x = x.toString();
+        this.y = yValue.toString();
+    }
+
+    public DiagramDto(Number x, String yValue) {
         this.x = x.toString();
         this.y = yValue.toString();
     }
