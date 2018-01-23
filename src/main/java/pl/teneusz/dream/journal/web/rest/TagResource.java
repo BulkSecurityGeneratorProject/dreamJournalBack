@@ -5,6 +5,7 @@ import pl.teneusz.dream.journal.domain.Tag;
 
 import pl.teneusz.dream.journal.repository.TagRepository;
 import pl.teneusz.dream.journal.repository.search.TagSearchRepository;
+import pl.teneusz.dream.journal.service.dto.DiagramDto;
 import pl.teneusz.dream.journal.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -140,6 +141,12 @@ public class TagResource {
         return StreamSupport
             .stream(tagSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .collect(Collectors.toList());
+    }
+
+    @GetMapping("/tagsCountBetweenYears")
+    @Timed
+    public List<DiagramDto> getTags(@RequestParam(value = "down", defaultValue = "1900") Long down, @RequestParam(value = "up", defaultValue = "2017") Long up){
+        return tagRepository.findHowManyDreamsWithTagBetweenYear(down, up);
     }
 
 }

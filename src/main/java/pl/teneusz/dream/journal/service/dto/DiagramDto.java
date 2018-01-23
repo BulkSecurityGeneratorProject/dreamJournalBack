@@ -2,30 +2,30 @@ package pl.teneusz.dream.journal.service.dto;
 
 public class DiagramDto {
 
-    private Double x;
-    private Double y;
+    private String x;
+    private String y;
 
     public DiagramDto() {
     }
 
-    public DiagramDto(Number x, Number yValue) {
-        this.x = x.doubleValue();
-        this.y = yValue.doubleValue();
+    public DiagramDto(String x, String yValue) {
+        this.x = x;
+        this.y = yValue;
     }
 
-    public Double getX() {
+    public String getX() {
         return x;
     }
 
-    public void setX(Double x) {
+    public void setX(String x) {
         this.x = x;
     }
 
-    public Double getY() {
+    public String getY() {
         return y;
     }
 
-    public void setY(Double y) {
+    public void setY(String y) {
         this.y = y;
     }
 }

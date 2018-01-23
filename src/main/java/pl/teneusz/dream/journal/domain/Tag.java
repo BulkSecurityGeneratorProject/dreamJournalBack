@@ -33,7 +33,7 @@ public class Tag implements Serializable {
     @Column(name = "is_adult")
     private Boolean isAdult;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Dream> dreams = new HashSet<>();
