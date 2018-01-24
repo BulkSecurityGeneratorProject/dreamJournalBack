@@ -223,7 +223,7 @@ public class DreamResource {
                 if (tagMap.get(tag.getName()) == null) {
                     tagMap.put(tag.getName(), 0);
                 }
-                tagMap.put(tag.getName(), tagMap.get(tag.getName() + 1));
+                tagMap.put(tag.getName(), tagMap.get(tag.getName()) + 1);
             }
         }
 
