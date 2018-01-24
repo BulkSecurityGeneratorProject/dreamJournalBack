@@ -143,10 +143,6 @@ public class TagResource {
             .collect(Collectors.toList());
     }
 
-    @GetMapping("/tagsCountBetweenYears")
-    @Timed
-    public List<DiagramDto> getTags(@RequestParam(value = "down", defaultValue = "1900") Long down, @RequestParam(value = "up", defaultValue = "2017") Long up){
-        return tagRepository.findHowManyDreamsWithTagBetweenYear(down, up);
-    }
+
 
 }

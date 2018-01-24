@@ -28,9 +28,11 @@ import pl.teneusz.dream.journal.web.rest.util.PaginationUtil;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
@@ -208,5 +210,23 @@ public class DreamResource {
         Page<Dream> page = dreamRepository.findDreamsByUserId(id, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/dreamsByUserId");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/tagsCountBetweenYears")
+    @Timed
+    public List<DiagramDto> getTags(@RequestParam(value = "down", defaultValue = "1900") Long down, @RequestParam(value = "up", defaultValue = "2017") Long up){
+        List<Dream> dreams = dreamRepository.findHowManyDreamsWithTagBetweenYear(down, up);;
+        Map<String,Integer> tagMap = new HashMap<>();
+        for(Dream dream: dreams)
+        {
+            for(Tag tag: dream.getTags()) {
+                if (tagMap.get(tag.getName()) == null) {
+                    tagMap.put(tag.getName(), 0);
+                }
+                tagMap.put(tag.getName(), tagMap.get(tag.getName() + 1));
+            }
+        }
+
+        return tagMap.entrySet().stream().map(e -> new DiagramDto(e.getKey(), e.getValue())).collect(Collectors.toList());
     }
 }
