@@ -43,5 +43,5 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
 
 
     @Query("select dream from Dream dream where year(dream.createDate) between :down and :up")
-    List<Dream> findHowManyDreamsWithTagBetweenYear(@Param("down") Long down, @Param("up") Long up);
+    List<Dream> findHowManyDreamsWithTagBetweenYear(@Param("down") Integer down, @Param("up") Integer up);
 }

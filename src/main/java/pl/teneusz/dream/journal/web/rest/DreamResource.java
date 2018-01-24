@@ -215,7 +215,7 @@ public class DreamResource {
     @GetMapping("/tagsCountBetweenYears")
     @Timed
     public List<DiagramDto> getTags(@RequestParam(value = "down", defaultValue = "1900") Long down, @RequestParam(value = "up", defaultValue = "2017") Long up){
-        List<Dream> dreams = dreamRepository.findHowManyDreamsWithTagBetweenYear(down, up);;
+        List<Dream> dreams = dreamRepository.findHowManyDreamsWithTagBetweenYear(down.intValue(), up.intValue());
         Map<String,Integer> tagMap = new HashMap<>();
         for(Dream dream: dreams)
         {
