@@ -46,6 +46,6 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     @Query("select dream from Dream dream where year(dream.createDate) between :down and :up")
     List<Dream> findHowManyDreamsWithTagBetweenYear(@Param("down") Integer down, @Param("up") Integer up);
 
-    @Query("select new pl.teneusz.dream.journal.service.dto.DiagramDto(year(dream.createDate), count(dream)) from Dream dream where year(dream.createDate) between :downCreate and :upCreate and dream.user.userDetails.gender = :gender and year(dream.user.userDetails.birthDate) between :downBirth and :upBirth group by year(dream.create)")
+    @Query("select new pl.teneusz.dream.journal.service.dto.DiagramDto(year(dream.createDate), count(dream)) from Dream dream where year(dream.createDate) between :downCreate and :upCreate and dream.user.userDetails.gender = :gender and year(dream.user.userDetails.birthDate) between :downBirth and :upBirth group by year(dream.createDate)")
     List<DiagramDto> foo(@Param("gender") GenderEnum gender,@Param("downCreate") Integer down, @Param("upCreate") Integer up, @Param("downBirth") Integer downB, @Param("upBirth") Integer upB);
 }
