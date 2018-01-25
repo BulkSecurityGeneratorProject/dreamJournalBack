@@ -64,7 +64,7 @@ public class Dream implements Serializable {
     @ManyToOne
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "dream_tags",
                joinColumns = @JoinColumn(name="dreams_id", referencedColumnName="id"),
