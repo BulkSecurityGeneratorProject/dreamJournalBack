@@ -99,7 +99,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JsonIgnore
-    @JoinColumn(name = "user_id")
+    @JoinColumn(unique = true)
     private UserDetails userDetails;
 
     public UserDetails getUserDetails() {

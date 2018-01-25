@@ -148,5 +148,16 @@
                                  referencedColumnNames="event_id"
                                  referencedTableName="jhi_persistent_audit_event"/>
     </changeSet>
+    <changeSet id="init_user" author="teneusz">
+        <preConditions onFail="CONTINUE">
+            <tableExists tableName="jhi_user"/>
+            <tableExists tableName="user_details"/>
+        </preConditions>
+        <addColumn tableName="jhi_user">
+            <column name="user_details_id" type="bigint">
+                <constraints foreignKeyName="user_user_details_fk" references="user_details(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>
