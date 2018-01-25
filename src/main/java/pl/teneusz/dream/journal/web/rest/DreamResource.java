@@ -234,6 +234,6 @@ public class DreamResource {
     @GetMapping("/dreamCountByGender/{gender}")
     public List<DiagramDto> foo(@PathVariable(name = "gender") GenderEnum genderEnum, @RequestParam(value = "createFrom", defaultValue = "1970") Integer createDown, @RequestParam(value = "createTo", defaultValue = "2018") Integer createTo,
                                 @RequestParam(value = "birthYearFrom", defaultValue = "1970") Integer birthDown, @RequestParam(value = "birthYearTo", defaultValue = "2020") Integer birthTo){
-        return dreamRepository.foo();//genderEnum,createDown,createTo,birthDown,birthTo);
+        return dreamRepository.foo(/*genderEnum,*/createDown,createTo,birthDown,birthTo);
     }
 }
