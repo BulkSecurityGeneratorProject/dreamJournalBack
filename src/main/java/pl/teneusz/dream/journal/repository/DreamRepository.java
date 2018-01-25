@@ -49,5 +49,5 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     @Query("select new pl.teneusz.dream.journal.service.dto.DiagramDto(year(dream.createDate), count(dream)) " +
         "from Dream dream " +
         "group by year(dream.createDate)")
-    List<DiagramDto> foo(@Param("gender") GenderEnum gender,@Param("downCreate") Integer down, @Param("upCreate") Integer up, @Param("downBirth") Integer downB, @Param("upBirth") Integer upB);
+    List<DiagramDto> foo();//@Param("gender") GenderEnum gender,@Param("downCreate") Integer down, @Param("upCreate") Integer up, @Param("downBirth") Integer downB, @Param("upBirth") Integer upB);
 }
