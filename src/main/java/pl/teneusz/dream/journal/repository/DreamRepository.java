@@ -42,6 +42,6 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     Page<Dream> findDreamsByUserId(@Param("id")Long id, Pageable pageable);
 
 
-    @Query("select dream from Dream dream where year(dream.createDate) between :down and :up")
+    @Query("select dream from Dream dream join dream.tags tag where year(dream.createDate) between :down and :up")
     List<Dream> findHowManyDreamsWithTagBetweenYear(@Param("down") Integer down, @Param("up") Integer up);
 }
