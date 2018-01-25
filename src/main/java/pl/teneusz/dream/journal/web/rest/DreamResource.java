@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.teneusz.dream.journal.domain.Dream;
 import pl.teneusz.dream.journal.domain.DreamHelper;
 import pl.teneusz.dream.journal.domain.Tag;
+import pl.teneusz.dream.journal.domain.enumeration.GenderEnum;
 import pl.teneusz.dream.journal.repository.DreamRepository;
 import pl.teneusz.dream.journal.repository.UserRepository;
 import pl.teneusz.dream.journal.repository.search.DreamSearchRepository;
@@ -228,5 +229,11 @@ public class DreamResource {
         }
 
         return tagMap.entrySet().stream().map(e -> new DiagramDto(e.getKey(), e.getValue())).collect(Collectors.toList());
+    }
+
+    @GetMapping("/dreamCountByGender/{gender}")
+    public List<DiagramDto> foo(@PathVariable GenderEnum genderEnum, @RequestParam(value = "createFrom", defaultValue = "1970") Integer createDown, @RequestParam(value = "createTo", defaultValue = "2018") Integer createTo,
+                                @RequestParam(value = "birthYearFrom", defaultValue = "1970") Integer birthDown, @RequestParam(value = "birthYearTo", defaultValue = "2020") Integer birthTo){
+        return dreamRepository.foo(genderEnum,createDown,createTo,birthDown,birthTo);
     }
 }

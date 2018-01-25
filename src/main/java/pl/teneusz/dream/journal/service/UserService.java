@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.teneusz.dream.journal.config.Constants;
 import pl.teneusz.dream.journal.domain.Authority;
 import pl.teneusz.dream.journal.domain.User;
+import pl.teneusz.dream.journal.domain.UserDetails;
+import pl.teneusz.dream.journal.domain.enumeration.GenderEnum;
 import pl.teneusz.dream.journal.repository.AuthorityRepository;
 import pl.teneusz.dream.journal.repository.UserRepository;
 import pl.teneusz.dream.journal.repository.search.UserSearchRepository;
@@ -20,6 +22,8 @@ import pl.teneusz.dream.journal.service.dto.UserDTO;
 import pl.teneusz.dream.journal.service.util.RandomUtil;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.List;
@@ -113,6 +117,9 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        newUser.setUserDetails(new UserDetails());
+        newUser.getUserDetails().setBirthDate(ZonedDateTime.now(ZoneId.systemDefault()));
+        newUser.getUserDetails().setGender(GenderEnum.MALE);
         userRepository.save(newUser);
         userSearchRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
