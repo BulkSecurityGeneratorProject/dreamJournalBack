@@ -52,5 +52,5 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
         "and dream.user.userDetails.gender = :gender " +
 //        "and (year(dream.user.userDetails.birthDate) between :downBirth and :upBirth) " +
       "group by year(dream.createDate)")
-    List<DiagramDto> foo(@Param("gender") GenderEnum gender,@Param("downCreate") Integer down, @Param("upCreate") Integer up);//, @Param("downBirth") Integer downB, @Param("upBirth") Integer upB);
+    List<DiagramDto> foo(@Param("gender") GenderEnum gender,@Param("downCreate") Integer down, @Param("upCreate") Integer up, @Param("downBirth") Integer downB, @Param("upBirth") Integer upB);
 }
