@@ -97,9 +97,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user")
     @JsonIgnore
-    @JoinColumn(unique = true)
     private UserDetails userDetails;
 
     public UserDetails getUserDetails() {
