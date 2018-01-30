@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.teneusz.dream.journal.domain.Dream;
 import pl.teneusz.dream.journal.domain.DreamHelper;
 import pl.teneusz.dream.journal.domain.Tag;
+import pl.teneusz.dream.journal.domain.User;
 import pl.teneusz.dream.journal.domain.enumeration.GenderEnum;
 import pl.teneusz.dream.journal.repository.DreamRepository;
 import pl.teneusz.dream.journal.repository.UserRepository;
@@ -113,6 +114,10 @@ public class DreamResource {
     public ResponseEntity<List<Dream>> getAllDreams(@ApiParam Pageable pageable, @RequestParam(value = "birthDate", required = false) Date birthDate) {
         log.debug("REST request to get a page of Dreams");
         Date bDate = birthDate!=null?birthDate:new Date();
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        if(user.isPresent() && birthDate == null){
+            bDate = user.get().getUserDetails() != null?Date.from(user.get().getUserDetails().getBirthDate().toInstant()):new Date();
+        }
         Page<Dream> page = dreamRepository.getAllDreams(pageable, birthDate);
 
         List<Long> ids = Lists.newArrayList();
