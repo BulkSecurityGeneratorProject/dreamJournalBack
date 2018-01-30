@@ -68,6 +68,9 @@ public class DreamResource {
     @Timed
     public ResponseEntity<Dream> createDream(@Valid @RequestBody Dream dream) throws URISyntaxException {
         log.debug("REST request to save Dream : {}", dream);
+        if(dream.getTags() != null && !dream.isIsAdult()){
+            dream.setIsAdult(!dream.getTags().stream().filter(t->t.isIsAdult()).collect(Collectors.toList()).isEmpty());
+        }
         if (dream.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dream cannot already have an ID")).body(null);
         }
