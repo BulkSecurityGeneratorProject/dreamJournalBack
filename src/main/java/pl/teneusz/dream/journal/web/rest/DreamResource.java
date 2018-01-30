@@ -121,7 +121,7 @@ public class DreamResource {
         if(user.isPresent() && birthDate == null){
             bDate = user.get().getUserDetails() != null?Date.from(user.get().getUserDetails().getBirthDate().toInstant()):new Date();
         }
-        Page<Dream> page = dreamRepository.getAllDreams(pageable, birthDate);
+        Page<Dream> page = dreamRepository.getAllDreams(pageable, bDate);
 
         List<Long> ids = Lists.newArrayList();
         page.getContent().stream().forEach(dream -> ids.add(dream.getId()));
