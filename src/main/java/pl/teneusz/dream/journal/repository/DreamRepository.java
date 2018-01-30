@@ -28,7 +28,7 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
 
     @Query("select dream from Dream dream where dream.visibility = true and dream.user is not null and " +
         "(dream.isAdult = false or" +
-        "( dream.isAdult = true and (year(:birthDate) >= 18 and month(:birthDate) >= month(current_date()) and month(:birthDate) >= month(current_date()) ))) " +
+        "( dream.isAdult = true and (year(:birthDate)-year(current_date()) >= 18 and month(:birthDate) >= month(current_date()) and month(:birthDate) >= month(current_date()) ))) " +
         "order by dream.id desc")
     Page<Dream> getAllDreams(Pageable pageable, @Param("birthDate") Date birthDate);
     @Query("select dream from Dream dream join dream.tags t where dream.visibility = true and t.name = :tag and dream.user is not null order by dream.id desc")
