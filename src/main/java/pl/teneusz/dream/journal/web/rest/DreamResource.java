@@ -29,10 +29,7 @@ import pl.teneusz.dream.journal.web.rest.util.PaginationUtil;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
@@ -113,9 +110,11 @@ public class DreamResource {
      */
     @GetMapping("/dreams")
     @Timed
-    public ResponseEntity<List<Dream>> getAllDreams(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<Dream>> getAllDreams(@ApiParam Pageable pageable, @RequestParam(value = "birthDate", required = false) Date birthDate) {
         log.debug("REST request to get a page of Dreams");
-        Page<Dream> page = dreamRepository.getAllDreams(pageable);
+        Date bDate = birthDate!=null?birthDate:new Date();
+        Page<Dream> page = dreamRepository.getAllDreams(pageable, birthDate);
+
         List<Long> ids = Lists.newArrayList();
         page.getContent().stream().forEach(dream -> ids.add(dream.getId()));
         List<DreamHelper> helpers = dreamRepository.getAdditionalInfo(ids);

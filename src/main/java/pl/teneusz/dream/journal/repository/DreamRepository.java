@@ -12,6 +12,7 @@ import pl.teneusz.dream.journal.domain.Tag;
 import pl.teneusz.dream.journal.domain.enumeration.GenderEnum;
 import pl.teneusz.dream.journal.service.dto.DiagramDto;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +26,8 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     @Query("select dream from Dream dream where dream.user.login = ?#{principal.username} order by dream.id desc")
     Page<Dream> findByUserIsCurrentUser(Pageable pageable);
 
-    @Query("select dream from Dream dream where dream.visibility = true and dream.user is not null order by dream.id desc")
-    Page<Dream> getAllDreams(Pageable pageable);
+    @Query("select dream from Dream dream where dream.visibility = true and dream.user is not null and (dream.isAdult = false or( dream.isAdult = true and (year(:birthDate) >= 18 and month(:birthDate) >= month(curentDate()) and month(:birthDate) >= month(curentDate()) )) order by dream.id desc")
+    Page<Dream> getAllDreams(Pageable pageable, @Param("birhDate") Date birthDate);
     @Query("select dream from Dream dream join dream.tags t where dream.visibility = true and t.name = :tag and dream.user is not null order by dream.id desc")
     Page<Dream> getDreamsByTag(Pageable pageable,@Param("tag") String tag);
 
